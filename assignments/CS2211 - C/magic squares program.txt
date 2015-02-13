@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(void)
+{
+int n;
+invalid_num:
+printf("Enter size of magic square: ");
+scanf("%d", &n);				/*read user input, store in n*/
+if (n % 2 == 0 || n < 1 || n > 99)		/*if n is even, less than 1 or greater than 99, have user re-input integer*/
+{
+printf("Invalid size, try again...\n");
+goto invalid_num;
+}
+
+int i = 0, j = (n-1)/2;				/*i and j are set to row 0, middle column to place 1*/
+int m[n][n];					/*declares two dimensional array of size nxn*/
+int r;						
+for (r = 0; r < n; r++)				/*nested loop initializes array with 0's*/
+{
+int c;
+for(c = 0; c < n; c++)
+{
+if( r==0 && c==j)				/*puts 1 in top row middle column*/
+{
+m[r][c] = 1;
+}
+else
+{
+m[r][c] = 0;   
+}
+}
+}
+int counter = 0; int entry = 2; int end = n*n - 1;	/*initialize counter, entry and end count*/
+while(counter < end)                            /*loop n^2 -1 times*/
+{
+i = --i % n;                                    /*decrement row i*/
+if(i < 0)                                       /*if row is out of bounds, set row to n-1 row*/
+{
+i = n-1;
+}
+j = ++j % n;                                    /*increment column j*/
+if(m[i][j] == 0)                                /*if value at index is 0, store entry, increment entry and counter*/
+{   
+m[i][j] = entry++;
+counter++;  
+}
+else                                            /*store entry below previous entry, increment entry and counter*/
+{
+i = (i + 2) % n;
+j = --j % n;
+if (j <0)                                       /*if column out of bounds set to n-1*/
+{
+j = n-1;
+}
+m[i][j] = entry++;
+counter++;
+}
+}
+
+int row;
+for (row = 0; row < n; row++)           /*nested loop prints two dimensional array*/
+{
+int col;
+for(col = 0; col < n; col++)
+{
+printf("%d\t", m[row][col]);
+}
+printf("\n");
+}
+ 
+return 0;
+}

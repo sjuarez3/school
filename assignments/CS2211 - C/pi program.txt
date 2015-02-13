@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<math.h>
+
+float rand_float()                      /*returns float between 0.00 and 1.00*/
+{
+      float f = ((float)rand())/((float)RAND_MAX);
+      int f1 = f * 100;
+      float f2 = (float) f1 / 100;
+      return f2;
+}
+
+int main(void)
+{
+int N;
+invalid_int:
+printf("Enter integer greater than 0 now:\n");
+scanf("%d", &N);                        /*reads integer input from user, stores in N*/
+if(N <= 0)                              /*if N is less than 1, have user re-input N*/
+{
+printf("Invalid integer, try again.\n");
+goto invalid_int;
+}
+
+srand(time(NULL));                      /*initialize seed for rand function*/
+int i = 1, num_points = 0;              /*i is counter, num_points is # of points in quadrant*/
+while(i <= N)
+{
+float x = rand_float();                 /*store random float numbers in x and y*/
+float y = rand_float();
+double z_sqr = (x*x) + (y*y);           /*square both numbers, add them, and store in variable*/
+if(sqrt(z_sqr) < 1)                     /*is previous sum in quadrant?*/
+{
+num_points++;                           /*Yes, increment counter and # of points*/
+i++;
+}
+else
+{
+i++;                                    /*No, just increment counter*/
+}
+}
+double ratio = (double)num_points / (double)N;  /*calculate ratio of points in quadrant to total points*/
+double pi = 4 * ratio;                  /*calculate pi by multiplying ratio by 4*/
+printf("pi is %lf\n", pi);              /*print value of pi*/
+
+return 0;
+}

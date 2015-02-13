@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+int main(void)
+{
+
+double num; /* Declarations */
+
+/* Enter and then read floating point input */
+invalid_input:
+printf("Enter number: \n");
+scanf("%lf", &num);
+
+/* If any input is greater than 1 restart program */
+if ( num >= 1)
+{
+printf("Error: Make sure value is smaller than 1.\n");
+goto invalid_input;
+}
+
+printf("Entered number was: %1.15f\n", num);
+
+/* declarations/initializations */
+double e = 1.0;
+int n = 1;
+int numTerms = 1;
+double currentTerm = 1.0;
+
+/* loop as long as current term is greater than user input */
+while (currentTerm > num)
+{
+int i = 1;
+int factorial = 1;
+
+/* compute factorial */
+while ( i <= n)
+{
+factorial = factorial * i;
+i++;
+}
+
+/* calculate current term and add to value of e, increment number of terms and n */
+currentTerm = 1.0 / factorial;
+e = e + currentTerm;
+n++;
+numTerms++;
+}
+
+
+/* Prints approx value of e and number of terms */
+printf("Approximate value of e is: %1.15lf\nNumber of terms required to generate value: %d\n", e, numTerms);
+
+return 0;
+}

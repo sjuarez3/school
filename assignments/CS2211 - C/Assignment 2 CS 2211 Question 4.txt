@@ -1,0 +1,81 @@
+#!/bin/sh
+#if arg1 is zero output two smallest numbers, if arg1 is one output two largest numbers
+case $# in  #if number of arguments is 0, 1 or greater than 2 print error
+0)
+  echo “Usage: nums option input-file”
+  exit 1
+  ;;
+1)
+  echo “Usage: nums option input-file”
+  exit 1
+  ;;
+2)
+ :
+ ;;
+*)
+ echo "Usage: nums option input-file"
+ exit 1
+ ;;
+esac
+
+if test -f "$2" ; then    #if argument 2 is a file that exists do nothing, else print error
+ :
+else
+ echo "input-file not found"
+ exit 2
+fi
+
+case $1 in   #if argument is not 0 or 1 print error
+0)
+ :
+ ;;
+1)
+ :
+ ;;
+*) 
+ echo "Option must be 0 or 1"
+ exit 3
+ ;;
+esac
+
+if [ $1 -eq 0 ]; then #print two smallest numbers
+ read line1
+ current=$line1; next= ; min2= ; count=1; exp=
+ while read nextLine    #loop through file line by line
+ do
+  next=$nextLine
+  if [ $current -le $next ]; then #if current line less than or equal to  nextline do nothing
+   :
+  else                   #else set current to next
+   current=$next
+   exp=`expr $count % 2`
+   if [ $exp -eq 0 ]; then #if current count even do nothing
+    :
+   else                  #else set min2 to next
+    min2=$next
+   fi
+  count=`expr $count + 1` #increment count
+  fi
+ done
+ echo "$current is the smallest number. $min2 is the second smallest number. "
+else              #print two largest numbers
+ read line1
+ current=$line1; next= ; max2= ; count=1; exp=
+ while read nextLine     #loop through file line by line
+ do 
+  next=$nextLine
+  if [ $current -ge $next ]; then #if current line greater than or equal to nextline do nothing
+   :
+  else                   #else set current to next
+   current=$next
+   exp=`expr $count % 2`
+   if [ $exp -eq 0 ]; then #if current count even do nothing
+    :
+   else                  #else set max2 to next
+    max2=$next
+   fi
+  count=`expr $count + 1` #increment count
+  fi
+ done
+ echo "$current is the largest number. $max2 is the second largest number."
+fi

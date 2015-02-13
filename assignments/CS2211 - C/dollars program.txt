@@ -1,0 +1,42 @@
+#include<stdio.h>
+
+/*function prototype*/
+void pay_amount(int dollars, int *twenties, int *tens, int *fives, int *toonies, int *loonies);
+
+/*determines the smallest number of $20, $10, $5, $2, and $1 bills/coins necessary to pay a dollar amount*/
+void pay_amount(int dollars, int *twenties, int *tens, int *fives, int *toonies, int *loonies)
+{
+if(dollars > 0)                         /*if dollar amount is valid proceed*/
+{
+*twenties = dollars / 20;               /*set pointer twenties to number of twenties needed*/
+*tens = (dollars % 20) / 10;            /*set pointer tens to number of tens needed*/
+*fives = (dollars % 10) / 5;            /*set pointer fives to number of fives needed*/
+*toonies = (dollars % 5) / 2;           /*set pointer toonies to number of toonies needed*/
+*loonies = dollars % 5;
+if(*loonies == 3 || *loonies == 1)      /*is remainder of dollar amount three or one?*/
+{
+*loonies = 1;                           /*set pointer loonies to one*/
+}
+else
+{
+*loonies = 0;                           /*set pointer loonies to 0*/
+}
+}
+else                                    /*if dollar amount is negative set pointers to 0*/
+{
+*twenties = 0; *tens = 0; *fives = 0; *toonies = 0; *loonies = 0;
+}
+}
+
+int main(void)
+{
+int dollars, _twenties, _tens, _fives, _toonies, _loonies; /*declare parameters for function*/
+printf("Enter dollars now:\n");
+scanf("%d", &dollars);                  /*reads integer input from user, stores in dollars*/
+pay_amount(dollars, &_twenties, &_tens, &_fives, &_toonies, &_loonies);
+ 
+/*print values of bills/coins needed*/
+printf("twenties: %d, tens: %d, fives: %d, toonies: %d, loonies: %d\n", _twenties, _tens, _fives, _toonies, _loonies);
+ 
+return 0;
+}
